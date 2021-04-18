@@ -5,13 +5,17 @@
       <h4>Log in</h4>
     </header>
     <main class="form-group">
-      <input type="text" v-model="email" placeholder="Email">
-      <input type="password" v-model="password" placeholder="Password">
-      <button class="login-btn">Log in</button>
+      <input type="text" v-model="email" placeholder="Email" :class="(emailError) ? 'err' : ''" />
+      <input type="password" v-model="password" placeholder="Password" :class="(passwordError) ? 'err' : ''" />
+      <button class="login-btn" @click="login">Log in</button>
+      <div class="error_msg" v-if="hasErrors">
+        {{ error }}
+      </div>
     </main>
     <footer>
       <p>
-        Don't have an account? <router-link class="link" to="/register">Sign up</router-link>
+        Don't have an account?
+        <router-link class="link" to="/register">Sign up</router-link>
       </p>
     </footer>
   </div>
@@ -20,10 +24,45 @@
 <script>
 export default {
   name: 'Login',
-  data () {
+  data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      hasErrors: false,
+      emailError: false,
+      passwordError: false,
+      error: ''
+    }
+  },
+  methods: {
+    login() {
+      let api_url = this.$store.state.api_url;
+
+      if (this.email == '' || this.password == '') return alert('Please fill in all fields')
+      this.$http.post(api_url + 'user/login', {
+        email: this.email,
+        password: this.password
+      }).then(response => {
+        if (response.data.auth) {
+          localStorage.setItem('jwt', response.data.token)
+          this.$router.push('/')
+        } else {
+          if (response.data.mailError) {
+            this.emailError = true
+          } else {
+            this.emailError = false
+          }
+          if (response.data.passError) {
+            this.passwordError = true
+          } else {
+            this.passwordError = false
+          }
+            this.error = response.data.msg
+            this.hasErrors = true
+        }
+      }).catch(err => {
+        console.log('Error:', err);
+      })
     }
   }
 }
@@ -57,42 +96,6 @@ export default {
       text-align: center;
       font-weight: 300;
       margin: 0;
-    }
-  }
-
-  .form-group {
-    flex: 1;
-    display: flex;
-    justify-content: flex-start;
-    flex-flow: column;
-    padding: 25px;
-
-    input {
-      width: 100%;
-      height: 30px;
-      border: 1px solid #DDD;
-      margin-bottom: 15px;
-      text-indent: 5px;
-      background: #EEE;
-      outline: none;
-
-      &:focus {
-        border: 1px solid #AAA;
-      }
-    }
-
-    button {
-      width: 100%;
-      height: 30px;
-      background: #FFCE00;
-      appearance: none;
-      border: none;
-      outline: none;
-      border-radius: 3px;
-
-      color: #171717;
-      font-size: 20px;
-      font-weight: 300;
     }
   }
 
