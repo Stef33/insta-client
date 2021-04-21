@@ -1,69 +1,27 @@
 <template>
   <div id="app">
+    <Header v-if="isAuthenticated"/>
     <router-view />
+    <Footer v-if="isAuthenticated"/>
   </div>
 </template>
- 
-<style lang="scss">
-body {
-  margin: 0;
-  padding: 0;
-  background: #F7F7F7;
-  font-family: 'Roboto', Helvetica, sans-serif;
-}
 
-#app {
-  width: 100vw;
-  min-height: 100vh;
-}
-
-.form-group {
-    flex: 1;
-    display: flex;
-    justify-content: flex-start;
-    flex-flow: column;
-    padding: 25px;
-
-    input {
-      width: 100%;
-      height: 30px;
-      border: 1px solid #DDD;
-      margin-bottom: 15px;
-      text-indent: 5px;
-      background: #EEE;
-      outline: none;
-
-      &.err {
-        background: rgba(255, 0, 0, 0.2);
-        border: 1px solid #AF1E20
-      }
-
-      &:focus {
-        border: 1px solid #AAA;
-      }
-    }
-
-    button {
-      width: 100%;
-      height: 30px;
-      background: #FFCE00;
-      appearance: none;
-      border: none;
-      outline: none;
-      border-radius: 3px;
-
-      color: #171717;
-      font-size: 20px;
-      font-weight: 300;
-    }
-
-    .error_msg {
-      margin: 15px 0;
-      padding: 10px;
-      background-color: rgba(255, 0, 0, 0.2);
-      color: #171717;
-      font-weight: 500;
-      border-radius: 3px;
+<script>
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+export default {
+  components: {
+    Header,
+    Footer
+  },
+  computed: {
+    isAuthenticated () {
+      return this.$store.state.isAuthenticated
     }
   }
+}
+</script>
+ 
+<style lang="scss">
+@import './assets/scss/main.scss'
 </style>
