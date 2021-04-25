@@ -2,20 +2,13 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
 import Home from "../views/Home.vue";
+import Post from "../views/Post.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-    meta: {
-      requiresAuth: true
-    }
-  },
+const routes = [ 
   {
     path: '/login',
     name: 'Login',
@@ -30,6 +23,22 @@ const routes = [
     component: Register,
     meta: {
       requiresAuth: false
+    }
+  },
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/newpost',
+    name: 'Post',
+    component: Post,
+    meta: {
+      requiresAuth: true
     }
   }
 ];

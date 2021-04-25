@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <main class="view feed">
     <article class="post" v-for="post in feed" :key="post.id">
       <header class="post-user">{{ post.display_name }}</header>
       <section class="post-picture">
@@ -11,7 +11,7 @@
       </footer>
     </article>
     <button @click="logout">Logout</button>
-  </div>
+  </main>
 </template>
 
 <script>
