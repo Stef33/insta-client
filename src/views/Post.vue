@@ -2,11 +2,16 @@
   <main class="view post">
     <section class="stream">
       <video ref="video" id="video" width="100%" height="300px" autoplay :class="(!captured) ? 'show' : 'hide'"></video>
-      <button class="capture-btn" @click="capture">CAPTURE</button>
-      <button class="cancel-btn" @click="cancel" v-if="captured">CANCEL</button>
+      <div class="post-btns">
+        <button class="capture-btn" @click="capture" v-if="!captured">Capture</button>
+        <button class="cancel-btn" @click="cancel" v-if="captured">Cancel</button>
+        <button class="upload-btn" @click="upload" v-if="captured">Upload</button>
+      </div>
     </section>
-    <section class="capture" :class="(captured) ? 'show' : 'hide'">
-      <canvas ref="canvas" id="canvas" width="100%" height="300px" :class="(captured) ? 'show' : 'hide'"></canvas>
+    <section :class="(captured) ? 'show' : 'hide'">
+      <canvas ref="canvas" id="canvas" width="100%" height="300px"></canvas>
+      <label for="desc">Description: </label>
+      <input type="text" id="desc" name="desc" v-model="desc" />
     </section>
   </main>
 </template>
@@ -19,6 +24,7 @@ export default {
       canvas: {},
       constraints: {},
       cap: '',
+      desc: '',
       captured: false
     }
   },
@@ -31,6 +37,19 @@ export default {
     },
     cancel () {
       this.captured = false
+    },
+    upload () {
+      let api_url = this.$store.state.api_url
+
+      this.$http.post(api_url + 'post/newpost', {
+        auth_token: localStorage.getItem('jwt'),
+        image: this.cap,
+        desc: this.desc
+      })
+      .then(response => {
+        console.log(response)
+      })
+  
     }
   },
   mounted () {
@@ -45,7 +64,7 @@ export default {
     if (this.$refs.canvas) {
       this.canvas = this.$refs.canvas
       this.canvas.width = window.innerWidth
-      this.canvas.height = window.innerHeight - 80
+      this.canvas.height = window.innerWidth
     }
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -69,14 +88,17 @@ export default {
 .hide {
   display: none;
 }
-.capture-btn {
+.post-btns {
   position: absolute;
   left: 50%;
-  bottom: 65px;
+  bottom: 95px;
   transform: translateX(-50%);
 }
 .image {
   width: 100%;
   height: auto;
+}
+input {
+  margin-bottom: 100px;
 }
 </style>

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import router from '../router'
 
 Vue.use(Vuex);
 
@@ -20,7 +21,7 @@ export default new Vuex.Store({
         id: 1,
         user_id: 1,
         display_name: 'General Grievous',
-        image: 'https://static.wikia.nocookie.net/frstarwars/images/d/d9/Grievous_t%C3%AAte.jpg/revision/latest/scale-to-width-down/700?cb=20160514112949',
+        image: 'https://img1.starwars-holonet.com/holonet/dictionnaire/photos/perso_grievous.jpg',
         desc: 'Your lightsabers will make a fine addition to my collection.',
         timestamp: 1618876800000
       },
@@ -45,12 +46,12 @@ export default new Vuex.Store({
     login (state, token) {
       state.isAuthenticated = true
       localStorage.setItem('jwt', token)
-      this.$router.push('/')
+      router.push('/')
     },
     logout (state) {
       state.isAuthenticated = false
       localStorage.removeItem('jwt')
-      this.$router.push('/login')
+      router.push('/login')
     }
   }
 });
