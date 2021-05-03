@@ -36,6 +36,9 @@ export default new Vuex.Store({
     ]
   },
   mutations: {
+    getFeed (state, feed) {
+      state.feed = feed
+    },
     isAuthenticated (state) {
       if (localStorage.getItem('jwt') != null) {
         state.isAuthenticated = true
