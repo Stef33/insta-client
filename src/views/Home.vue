@@ -10,7 +10,6 @@
         <p class="timestamp">{{ timestampToDate(post.timestamp) }}</p>
       </footer>
     </article>
-    <button @click="logout">Logout</button>
   </main>
 </template>
 
@@ -24,9 +23,6 @@ export default {
     }
   },
   methods: {
-    logout () {
-      this.$store.commit('logout')
-    },
     timestampToDate (timestamp) {
       timestamp = new Number(timestamp)
       let d = new Date(timestamp)

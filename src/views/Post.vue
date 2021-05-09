@@ -3,20 +3,28 @@
     <section class="stream">
       <video ref="video" id="video" width="100%" height="300px" autoplay :class="(!captured) ? 'show' : 'hide'"></video>
       <div class="post-btns">
-        <button class="capture-btn" @click="capture" v-if="!captured">Capture</button>
-        <button class="cancel-btn" @click="cancel" v-if="captured">Cancel</button>
-        <button class="upload-btn" @click="upload" v-if="captured">Upload</button>
+        <button class="capture-btn" @click="capture" v-if="!captured">
+          <i class="material-icons icn-lg">camera</i>
+        </button>
+        <button class="cancel-btn" @click="cancel" v-if="captured">
+          <i class="material-icons icn-lg">cancel</i>
+        </button>
+        <button class="upload-btn" @click="upload" v-if="captured">
+          <i class="material-icons icn-lg">cloud_upload</i>
+        </button>
       </div>
     </section>
     <section :class="(captured) ? 'show' : 'hide'">
       <canvas ref="canvas" id="canvas" width="100%" height="300px"></canvas>
-      <label for="desc">Description: </label>
-      <input type="text" id="desc" name="desc" v-model="desc" />
+      <div class="field-group">
+        <label for="desc">Description: </label>
+        <input type="text" id="desc" name="desc" class="input-field" v-model="desc" />
+      </div>
     </section>
   </main>
 </template>
 
-<script>
+<script> 
 export default {
   data () {
     return {
@@ -82,25 +90,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.show {
-  display: block;
-}
-.hide {
-  display: none;
-}
-.post-btns {
-  position: absolute;
-  left: 50%;
-  bottom: 95px;
-  transform: translateX(-50%);
-}
-.image {
-  width: 100%;
-  height: auto;
-}
-input {
-  margin-bottom: 100px;
-}
-</style>

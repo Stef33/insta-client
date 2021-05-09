@@ -2,7 +2,7 @@
   <main>
 
     <section class="profile-head">
-      {{ display_name }}
+      <strong>Name:</strong> {{ display_name }}
     </section>
 
     <section class="posts">
@@ -38,33 +38,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.profile {
-  display: flex;
-  flex-direction: column;
-
-  .profile-head {
-    background: white;
-    padding: 15px;
-    box-sizing: border-box;
-  }
-
-  .posts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: min-content;
-    grid-gap: 5px;
-
-    .post {
-      padding: 0;
-
-      .post-image {
-        width: 100%;
-        display: block;
-      }
-    }
-    
-  }
-}
-</style>
